@@ -1,8 +1,10 @@
+import Navbar from "./components/layout/Navbar";
+
 function App() {
   return (
-    <>
-      <h1>Church Landing Page</h1>
-    </>
+    <main className="min-h-screen bg-slate-950">
+      <Navbar />
+    </main>
   );
 }
 
