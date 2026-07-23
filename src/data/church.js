@@ -3,7 +3,6 @@ const church = {
   shortName: "Open Heaven",
   city: "Asaba",
   address: "13 Joe Dansaba Street, Beside Stadium, Off MFM Road, Asaba",
-  cta: "Plan Your Visit",
 
   navLinks: [
     { name: "Home", href: "#home" },
@@ -11,6 +10,15 @@ const church = {
     { name: "Services", href: "#services" },
     { name: "Visit", href: "#visit" },
   ],
+
+  hero: {
+    badge: "WELCOME TO RCCG",
+    title: "Open Heaven Model Parish",
+    subtitle:
+      "A place where lives are transformed through God's Word, heartfelt worship, and a loving community.",
+    primaryButton: "Plan Your Visit",
+    secondaryButton: "Watch Sermons",
+  },
 };
 
 export default church;

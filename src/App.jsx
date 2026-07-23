@@ -1,10 +1,12 @@
 import Navbar from "./components/layout/Navbar";
+import Hero from "./sections/Hero";
 
 function App() {
   return (
-    <main className="min-h-screen bg-slate-950">
+    <>
       <Navbar />
-    </main>
+      <Hero />
+    </>
   );
 }
 
