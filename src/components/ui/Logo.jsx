@@ -3,7 +3,10 @@ import church from "../../data/church";
 
 function Logo() {
   return (
-    <a href="#home" className="flex items-center gap-3">
+    <a
+      href="#home"
+      className="flex items-center gap-3 transition-transform duration-300 hover:scale-[1.02]"
+    >
       <img src={logo} alt={church.name} className="h-12 w-12 object-contain" />
 
       <div className="leading-tight">
