@@ -6,11 +6,11 @@ import Button from "../components/ui/Button";
 
 function PrayerRequest() {
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null);
 
   const [form, setForm] = useState({
     name: "",
     phone: "",
-    email: "",
     request: "",
   });
 
@@ -25,7 +25,10 @@ function PrayerRequest() {
     e.preventDefault();
 
     if (!form.request.trim()) {
-      alert("Please enter your prayer request.");
+      setMessage({
+        type: "error",
+        text: "Please enter your prayer request.",
+      });
       return;
     }
 
@@ -46,17 +49,23 @@ function PrayerRequest() {
         throw new Error(data.message || "Something went wrong.");
       }
 
-      alert("Your prayer request has been submitted successfully.");
+      setMessage({
+        type: "success",
+        text: "✅ Your prayer request has been submitted successfully. Our prayer team will pray with you.",
+      });
 
       setForm({
         name: "",
         phone: "",
-        email: "",
         request: "",
       });
     } catch (error) {
       console.error(error);
-      alert("Something went wrong. Please try again.");
+
+      setMessage({
+        type: "error",
+        text: "❌ Something went wrong. Please try again.",
+      });
     } finally {
       setLoading(false);
     }
@@ -70,6 +79,18 @@ function PrayerRequest() {
           title="Prayer Request"
           description="Whatever you are trusting God for, we'd love to stand in faith with you. Submit your prayer request below and our prayer team will pray with you."
         />
+
+        {message && (
+          <div
+            className={`mx-auto mt-8 max-w-3xl rounded-xl px-6 py-4 text-center font-medium ${
+              message.type === "success"
+                ? "bg-green-100 text-green-800 border border-green-300"
+                : "bg-red-100 text-red-700 border border-red-300"
+            }`}
+          >
+            {message.text}
+          </div>
+        )}
 
         <form
           onSubmit={handleSubmit}
@@ -94,15 +115,6 @@ function PrayerRequest() {
               className="rounded-xl border p-4 outline-none focus:border-green-600"
             />
           </div>
-
-          <input
-            type="email"
-            name="email"
-            placeholder="Email (Optional)"
-            value={form.email}
-            onChange={handleChange}
-            className="mt-6 w-full rounded-xl border p-4 outline-none focus:border-green-600"
-          />
 
           <textarea
             rows="7"

@@ -155,7 +155,7 @@ function Hero() {
             <Button href="#visit">Plan Your Visit</Button>
 
             <Button href="#services" variant="secondary">
-              Join Us This Sunday
+              Join Us This Week
             </Button>
           </motion.div>
         </div>

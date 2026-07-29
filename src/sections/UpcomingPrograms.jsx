@@ -23,7 +23,7 @@ function UpcomingPrograms() {
   if (events.length === 0) return null;
 
   return (
-    <section className="bg-white py-24">
+    <section id="programs" className="bg-white py-24">
       <Container>
         <SectionTitle
           label="DON'T MISS IT"
