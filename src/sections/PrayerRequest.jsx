@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { v4 as uuid } from "uuid";
-import { client } from "../sanity/client";
 
 import Container from "../components/ui/Container";
 import SectionTitle from "../components/ui/SectionTitle";
@@ -12,6 +10,7 @@ function PrayerRequest() {
   const [form, setForm] = useState({
     name: "",
     phone: "",
+    email: "",
     request: "",
   });
 
@@ -33,29 +32,38 @@ function PrayerRequest() {
     setLoading(true);
 
     try {
-      await client.create({
-        _id: uuid(),
-        _type: "prayerRequest",
-        ...form,
+      const response = await fetch("/api/prayer-request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
       });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Something went wrong.");
+      }
 
       alert("Your prayer request has been submitted successfully.");
 
       setForm({
         name: "",
         phone: "",
+        email: "",
         request: "",
       });
     } catch (error) {
       console.error(error);
       alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   return (
-    <section className="bg-slate-50 py-24" id="prayer">
+    <section id="prayer" className="bg-slate-50 py-24">
       <Container>
         <SectionTitle
           label="WE ARE PRAYING WITH YOU"
@@ -87,6 +95,15 @@ function PrayerRequest() {
             />
           </div>
 
+          <input
+            type="email"
+            name="email"
+            placeholder="Email (Optional)"
+            value={form.email}
+            onChange={handleChange}
+            className="mt-6 w-full rounded-xl border p-4 outline-none focus:border-green-600"
+          />
+
           <textarea
             rows="7"
             name="request"
@@ -97,7 +114,7 @@ function PrayerRequest() {
           />
 
           <div className="mt-8">
-            <Button>
+            <Button disabled={loading}>
               {loading ? "Submitting..." : "Submit Prayer Request"}
             </Button>
           </div>
