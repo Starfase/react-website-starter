@@ -1,9 +1,9 @@
 import { createClient } from "@sanity/client";
 
 const client = createClient({
-  projectId: process.env.VITE_SANITY_PROJECT_ID || "xlnpjjlk",
-  dataset: process.env.VITE_SANITY_DATASET || "production",
-  apiVersion: process.env.VITE_SANITY_API_VERSION || "2025-01-01",
+  projectId: process.env.SANITY_PROJECT_ID,
+  dataset: process.env.SANITY_DATASET,
+  apiVersion: process.env.SANITY_API_VERSION,
   token: process.env.SANITY_API_TOKEN,
   useCdn: false,
 });
@@ -17,15 +17,14 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { name, phone, email, request } = req.body;
+    const { name, phone, request } = req.body;
 
     await client.create({
       _type: "prayerRequest",
       name,
       phone,
-      email,
       request,
-      submittedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
     });
 
     return res.status(200).json({
