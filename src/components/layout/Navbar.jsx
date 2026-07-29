@@ -7,7 +7,7 @@ import Container from "../ui/Container";
 import HamburgerButton from "../ui/HamburgerButton";
 import church from "../../data/church";
 
-function Navbar() {
+function Navbar({ announcementHidden }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -32,7 +32,9 @@ function Navbar() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        className={`fixed inset-x-0 ${
+          announcementHidden ? "top-0" : "top-10"
+        } z-40 transition-all duration-500 ${
           scrolled
             ? "bg-slate-950/75 backdrop-blur-2xl border-b border-white/10 shadow-xl"
             : "bg-slate-950/40 backdrop-blur-md"

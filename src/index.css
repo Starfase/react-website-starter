@@ -52,3 +52,25 @@ body {
 .animate-imageFade {
   animation: imageFade 3s ease-in-out;
 }
+@keyframes marquee {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  white-space: nowrap;
+  min-width: 100%;
+  animation: marquee 20s linear infinite;
+  will-change: transform;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}

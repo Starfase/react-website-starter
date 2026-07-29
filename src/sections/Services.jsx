@@ -1,37 +1,40 @@
-import { Sun, BookOpen, HeartHandshake } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Sun, BookOpen, HeartHandshake, Calendar } from "lucide-react";
 
 import Container from "../components/ui/Container";
 import Card from "../components/ui/Card";
 import SectionTitle from "../components/ui/SectionTitle";
 
-const services = [
-  {
-    icon: Sun,
-    title: "Sunday Worship Service",
-    day: "Every Sunday",
-    time: "8:00 AM",
-    description:
-      "Join us for uplifting worship, inspiring messages, and a life-changing encounter with God.",
-  },
-  {
-    icon: BookOpen,
-    title: "Digging Deep",
-    day: "Every Tuesday",
-    time: "5:00 PM",
-    description:
-      "Grow deeper in God's Word through practical Bible teaching, discussion, and spiritual discovery.",
-  },
-  {
-    icon: HeartHandshake,
-    title: "Faith Clinic",
-    day: "Every Thursday",
-    time: "5:00 PM",
-    description:
-      "A dedicated prayer service for healing, breakthroughs, restoration, and strengthening your faith.",
-  },
-];
+import { client } from "../sanity/client";
+import { SERVICES_QUERY } from "../queries/services";
+
+const icons = {
+  Sun,
+  BookOpen,
+  HeartHandshake,
+  Calendar,
+};
 
 function Services() {
+  const [services, setServices] = useState([]);
+
+
+  useEffect(() => {
+    async function loadServices() {
+      try {
+        const data = await client.fetch(SERVICES_QUERY);
+
+        console.log("SERVICES:", data);
+
+        setServices(data);
+      } catch (error) {
+        console.error("SERVICE ERROR:", error);
+      }
+    }
+    loadServices();
+  }, []);
+
+ 
   return (
     <section id="services" data-aos="fade-up" className="bg-slate-50 py-24">
       <Container>
@@ -42,14 +45,12 @@ function Services() {
         />
 
         <div className="mt-16 grid gap-8 lg:grid-cols-3">
-          {services.map((service, index) => {
-            const Icon = service.icon;
+          {services.map((service) => {
+            const Icon = icons[service.icon] || Calendar;
 
             return (
               <Card
-                key={service.title}
-                data-aos="fade-up"
-                data-aos-delay={index * 150}
+                key={service._id}
                 className="group rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-green-500 hover:shadow-2xl"
               >
                 <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-green-100 text-green-600 transition-all duration-300 group-hover:bg-green-600 group-hover:text-white">
